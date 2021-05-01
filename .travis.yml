@@ -1,0 +1,36 @@
+env:
+  global:
+    - CACHE_NAME=multiarch
+
+cache:
+  directories:
+  - $HOME/cache
+  
+script:
+  - cat $HOME/cache/test.txt
+  - echo "cached file" >> $HOME/cache/test.txt
+  - cat $HOME/cache/test.txt 
+
+jobs:
+  include:
+   - stage: building images
+     name: building amd64 image
+     arch: amd64
+     script:
+       - echo "amd64" >> $HOME/cache/amd64.txt
+       
+   - name: building ppc64le image
+     arch: ppc64le
+     script:
+       - echo "ppc64le" >> $HOME/cache/ppc64le.txt
+       
+   - name: building s390x image
+     arch: s390x
+     script:
+       - echo "s390x" >> $HOME/cache/s390x.txt
+       
+   - stage: publish multi-arch image
+     arch: amd64
+     script:
+       - cat $HOME/cache/*
+      
