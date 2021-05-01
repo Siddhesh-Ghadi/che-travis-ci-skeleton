@@ -1,3 +1,7 @@
+env:
+  global:
+    - CAN_FAIL=true
+
 before_cache:
   - export CACHE_NAME=multiarch
 
@@ -11,6 +15,9 @@ script:
   - cat $HOME/cache/test.txt 
 
 jobs:
+ allow_failures: 
+    env:
+      - CAN_FAIL=true
   include:
    - stage: building images
      name: building amd64 image
