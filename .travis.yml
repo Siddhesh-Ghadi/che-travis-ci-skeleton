@@ -1,6 +1,5 @@
-env:
-  global:
-    - CACHE_NAME=multiarch
+before_cache:
+  - export CACHE_NAME=multiarch
 
 cache:
   directories:
