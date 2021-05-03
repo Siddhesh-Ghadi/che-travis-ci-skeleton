@@ -20,14 +20,13 @@ jobs:
          script: echo "push amd64 image(nighty & sha tag)"
          skip_cleanup: true
          on:
-           all_branches: true
+           tags: false
      deploy:
        # push release tag
        - provider: script
          script: echo "push amd64 image(release tag)"
          skip_cleanup: true
          on:
-           all_branches: true
            tags: true
        
    - name: building ppc64le image
@@ -40,14 +39,12 @@ jobs:
          script: echo "push ppc64le image(nighty & sha tag)"
          skip_cleanup: true
          on:
-           all_branches: true
-     deploy:
+           tags: false
        # push release tag
        - provider: script
          script: echo "push ppc64le image(release tag)"
          skip_cleanup: true
          on:
-           all_branches: true
            tags: true
        
    - name: building s390x image
@@ -60,14 +57,12 @@ jobs:
          script: echo "push s390x image(nighty & sha tag)"
          skip_cleanup: true
          on:
-           all_branches: true
-     deploy:
+           tags: false
        # push release tag
        - provider: script
          script: echo "push s390x image(release tag)"
          skip_cleanup: true
          on:
-           all_branches: true
            tags: true
        
    - stage: publish multi-arch image
@@ -79,12 +74,10 @@ jobs:
          script: echo "push multiarch manifest(nighty & sha tag)"
          skip_cleanup: true
          on:
-           all_branches: true
-     deploy:
+           tags: false
        # push release tag
        - provider: script
          script: echo "push multiarch manifest(release tag)"
          skip_cleanup: true
          on:
-           all_branches: true
            tags: true
