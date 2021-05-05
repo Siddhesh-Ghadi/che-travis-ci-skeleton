@@ -25,7 +25,7 @@ jobs:
      deploy:
        # push release tag
        - provider: script
-         script: echo "push amd64 image(release tag)"
+         script: echo "push amd64 image(release tag) for $TRAVIS_TAG"
          skip_cleanup: true
          on:
            all_branches: true
@@ -45,7 +45,7 @@ jobs:
            tags: false
        # push release tag
        - provider: script
-         script: echo "push ppc64le image(release tag)"
+         script: echo "push ppc64le image(release tag) for $TRAVIS_TAG"
          skip_cleanup: true
          on:
            all_branches: true
@@ -65,7 +65,7 @@ jobs:
            tags: false
        # push release tag
        - provider: script
-         script: echo "push s390x image(release tag)"
+         script: echo "push s390x image(release tag) for $TRAVIS_TAG"
          skip_cleanup: true
          on:
            all_branches: true
@@ -85,7 +85,7 @@ jobs:
            tags: false
        # push release tag
        - provider: script
-         script: echo "push multiarch manifest(release tag)"
+         script: echo "push multiarch manifest(release tag) for $TRAVIS_TAG"
          skip_cleanup: true
          on:
            all_branches: true
