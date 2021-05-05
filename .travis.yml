@@ -22,7 +22,6 @@ jobs:
          on:
            all_branches: true
            tags: false
-     deploy:
        # push release tag
        - provider: script
          script: echo "push amd64 image(release tag) for $TRAVIS_TAG"
