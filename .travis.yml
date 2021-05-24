@@ -9,10 +9,10 @@ script: echo $PHASES
 jobs:
   include:
     - stage: Phase 3
-      if: 1 IN (env(PHASES))
+      if: env("3") IN (env(PHASES))
     - stage: Phase 5
       if: env(PHASES) =~ /[5]/
     - stage: Phase 2
-      if: 2 IN (env(PHASES))
+      if: env("2") IN (env(PHASES))
 
 
