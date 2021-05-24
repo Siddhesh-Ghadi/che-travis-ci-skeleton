@@ -9,4 +9,6 @@ script: echo $PHASES
 jobs:
   include:
     - stage: Phase 3
+      if: env(PHASES) =~ /[3]/
+
 
