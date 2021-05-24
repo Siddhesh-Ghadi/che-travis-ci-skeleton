@@ -1,7 +1,8 @@
 arch: ppc64le
 
 env:
-  global: PHASES="1 2 3 4"
+  global: 
+    - PHASES="1 2 3 4"
   
 jobs:
   include:
