@@ -2,7 +2,7 @@ arch: ppc64le
 
 env:
   global: 
-    - PHASES="3"
+    - PHASES="1,3,5"
   
 script: echo $PHASES
 
@@ -10,5 +10,7 @@ jobs:
   include:
     - stage: Phase 3
       if: env(PHASES) =~ /[3]/
+    - stage: Phase 2
+      if: env(PHASES) =~ /[2]/
 
 
