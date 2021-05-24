@@ -12,5 +12,7 @@ jobs:
       if: env(PHASES) =~ /[3]/
     - stage: Phase 2
       if: env(PHASES) =~ /[2]/
+    - stage: Phase 5
+      if: env(PHASES) =~ /[5]/
 
 
