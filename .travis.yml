@@ -6,3 +6,7 @@ env:
   
 script: echo $PHASES
 
+jobs:
+  include:
+    - stage: Phase 1
+      if: "1" IN env(PHASES)
