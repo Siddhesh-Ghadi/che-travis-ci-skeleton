@@ -14,87 +14,12 @@ jobs:
    - <<: *unit-test
      name: run unit test on ppc64le
      arch: ppc64le
+     script: exit 1
    - <<: *unit-test
      name: run unit test on s390x
      arch: s390x
      
-   - stage: building images
-     name: building amd64 image
-     arch: amd64
-     script:
-       - echo "build amd64 image"
-     deploy:
-       # push nightly & sha tag
-       - provider: script
-         script: echo "push amd64 image(nighty & sha tag)"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: false
-       # push release tag
-       - provider: script
-         script: echo "push amd64 image(release tag) for $TRAVIS_TAG"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: true
-       
-   - name: building ppc64le image
-     arch: ppc64le
-     script:
-       - echo "build ppc64le image"
-     deploy:
-       # push nightly & sha tag
-       - provider: script
-         script: echo "push ppc64le image(nighty & sha tag)"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: false
-       # push release tag
-       - provider: script
-         script: echo "push ppc64le image(release tag) for $TRAVIS_TAG"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: true
-       
-   - name: building s390x image
-     arch: s390x
-     script:
-       - echo "build ppc64le image"
-     deploy:
-       # push nightly & sha tag
-       - provider: script
-         script: echo "push s390x image(nighty & sha tag)"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: false
-       # push release tag
-       - provider: script
-         script: echo "push s390x image(release tag) for $TRAVIS_TAG"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: true
-       
-   - stage: publish multi-arch image
-     if: type != pull_request
-     arch: amd64
-     script: skip
-     deploy:
-       # push nightly & sha tag
-       - provider: script
-         script: echo "push multiarch manifest(nighty & sha tag)"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: false
-       # push release tag
-       - provider: script
-         script: echo "push multiarch manifest(release tag) for $TRAVIS_TAG"
-         skip_cleanup: true
-         on:
-           all_branches: true
-           tags: true
+  allow_failures:
+  - <<: *unit-test
+    arch: ppc64le
+  
