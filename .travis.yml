@@ -6,7 +6,6 @@ jobs:
   include:
    - &unit-test
      stage: run unit test
-     if: type = pull_request
      script:
        - echo "run unit test"
      name: run unit test on amd64
@@ -18,5 +17,10 @@ jobs:
    - <<: *unit-test
      name: run unit test on s390x
      arch: s390x
+
+  allow_failures:
+  - <<: *unit-test
+    arch: ppc64le
+
 
   
