@@ -22,7 +22,7 @@ jobs:
      stage: run test
      script:
        - echo "run test"
-     name: run unit test on amd64
+     name: run test on amd64
      arch: amd64
    - <<: *test
      name: run test on ppc64le
@@ -34,7 +34,7 @@ jobs:
 
   allow_failures:
   - arch: ppc64le
-    name: run unit test on ppc64le
+    name: run test on ppc64le
 
 
   
