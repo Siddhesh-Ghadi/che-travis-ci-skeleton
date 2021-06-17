@@ -19,17 +19,17 @@ jobs:
      arch: s390x
      
    - &test
-     stage: run unit test
+     stage: run test
      script:
-       - echo "run unit test"
+       - echo "run test"
      name: run unit test on amd64
      arch: amd64
    - <<: *test
-     name: run unit test on ppc64le
+     name: run test on ppc64le
      arch: ppc64le
      script: bash -c "exit 1"
    - <<: *test
-     name: run unit test on s390x
+     name: run test on s390x
      arch: s390x
 
   allow_failures:
