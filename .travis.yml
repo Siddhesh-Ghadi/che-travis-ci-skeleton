@@ -13,14 +13,13 @@ jobs:
    - <<: *unit-test
      name: run unit test on ppc64le
      arch: ppc64le
-     script: exit 1
+     script: bash -c "exit 1"
    - <<: *unit-test
      name: run unit test on s390x
      arch: s390x
 
   allow_failures:
-  - <<: *unit-test
-    arch: ppc64le
+  - arch: ppc64le
 
 
   
