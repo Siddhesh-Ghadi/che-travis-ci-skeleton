@@ -20,6 +20,5 @@ jobs:
      arch: s390x
      
   allow_failures:
-  - <<: *unit-test
-    arch: ppc64le
+  - arch: ppc64le
   
