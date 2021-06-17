@@ -18,7 +18,5 @@ jobs:
    - <<: *unit-test
      name: run unit test on s390x
      arch: s390x
-     
-  allow_failures:
-  - arch: ppc64le
+
   
