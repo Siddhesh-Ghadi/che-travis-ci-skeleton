@@ -62,7 +62,7 @@ jobs:
      stage: Build and push both short SHA tag and next tag
      name: Build image on amd64
      if: type = push
-     script: sleep
+     script: sleep 1m
      arch: amd64
    - <<: *next-build
      name: Build image on arm64
