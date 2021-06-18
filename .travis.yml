@@ -32,8 +32,6 @@ jobs:
   fast_finish: true
   allow_failures:
    - if: type = pull_request
-     arch: arm64
-   - if: type = pull_request
      arch: ppc64le
    - if: type = pull_request
      arch: s390x
@@ -46,10 +44,6 @@ jobs:
       arch: amd64
       install: skip
       script: echo "yarn"
-    - <<: *node-build
-      name: Node Build on arm64
-      arch: arm64
-      script: bash -c "exit 1"
     - <<: *node-build
       name: Node Build on ppc64le
       arch: ppc64le
@@ -67,10 +61,6 @@ jobs:
         set -e
         echo "build"
     - <<: *docker-build
-      name: Docker build (Alpine) on arm64
-      arch: arm64
-      script: bash -c "exit 1"
-    - <<: *docker-build
       name: Docker build (Alpine) on ppc64le
       arch: ppc64le
     - <<: *docker-build
@@ -80,10 +70,6 @@ jobs:
     - <<: *docker-build
       name: Docker build (ubi8) on amd64
       arch: amd64
-      env: DIST=ubi8
-    - <<: *docker-build
-      name: Docker build (ubi8) on arm64
-      arch: arm64
       env: DIST=ubi8
     - <<: *docker-build
       name: Docker build (ubi8) on ppc64le
@@ -104,9 +90,6 @@ jobs:
       - |
         set -e
         echo "build next"
-    - <<: *build-and-push-next
-      name: Build & Publish image on arm64
-      arch: arm64
     - <<: *build-and-push-next
       arch: ppc64le
       name: Build & Publish image on ppc64le
@@ -129,9 +112,6 @@ jobs:
         set -e
         echo "check branch"
     - <<: *check-a-theia-branch
-      arch: arm64
-      name: Build an image against Theia branch on arm64
-    - <<: *check-a-theia-branch
       arch: ppc64le
       name: Build an image against Theia branch on ppc64le
     - <<: *check-a-theia-branch
@@ -147,9 +127,6 @@ jobs:
       script:
       - |  
         echo "build release image"
-    - <<: *release-che-theia
-      arch: arm64
-      name: Build and publish image on arm64
     - <<: *release-che-theia
       arch: ppc64le 
       name: Build and publish image on ppc64le
