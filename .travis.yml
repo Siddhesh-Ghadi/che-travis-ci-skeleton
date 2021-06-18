@@ -10,5 +10,11 @@ before_script:
   
 script:
   - |
-    set -e
+    #set -e
     ./script.sh
+
+after_success:
+  - echo "pass"
+  
+after_failure:
+  - echo "fail"
