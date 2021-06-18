@@ -43,9 +43,6 @@ jobs:
    - &unit-test
      name: Run unit tests on amd64
      if: type = pull_request
-     install: 
-       - export GO111MODULE="on" 
-       - go get ${gobuild_args} ./...
      script: sleep 1m
      arch: amd64
    - <<: *unit-test
@@ -71,7 +68,7 @@ jobs:
      name: Build image on ppc64le
      arch: ppc64le
      script:
-     - sleep 5m
+     - sleep 3m
      - bash -c "exit 1"
    - <<: *next-build
      name: Build image on s390x
@@ -81,3 +78,5 @@ jobs:
   allow_failures:
    - if: type = pull_request
      arch: ppc64le
+   - if: type = pull_request
+     arch: arm64
