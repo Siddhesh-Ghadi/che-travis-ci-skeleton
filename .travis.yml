@@ -66,11 +66,11 @@ jobs:
     - <<: *docker-build
       name: Docker build (Alpine) on s390x
       arch: s390x
-      script: bash -c "exit 1"
     - <<: *docker-build
       name: Docker build (ubi8) on amd64
       arch: amd64
       env: DIST=ubi8
+      script: bash -c "exit 1"
     - <<: *docker-build
       name: Docker build (ubi8) on ppc64le
       arch: ppc64le
@@ -79,7 +79,6 @@ jobs:
       name: Docker build (ubi8) on s390x
       arch: s390x
       env: DIST=ubi8
-      script: bash -c "exit 1"
 
     - &build-and-push-next
       stage: Build & Publish 'next'
