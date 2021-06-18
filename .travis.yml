@@ -1,40 +1,83 @@
 language: go
-dist: focal
+
+go:
+- "1.15"
+
 os: linux
+dist: focal
+
+git:
+  depth: false
+
+services:
+  - docker
+
+env:  
+   global:
+   - TAG=next
+   - TRAVIS_TAG=travis
+   - REGISTRY=quay.io
+   - ORGANIZATION=prabhav
+   - IMAGE=che-machine-exec
 
 jobs:
   include:
+   - &docker-build-pr
+     stage: PR Check
+     if: type = pull_request
+     name: Check docker build on amd64
+     install: skip
+     script: sleep 1m
+     name: Check docker build on arm64
+     arch: arm64
+   - <<: *docker-build-pr
+     name: Check docker build on ppc64le
+     arch: ppc64le
+     script:
+     - sleep 3m
+     - bash -c "exit 1"
+   - <<: *docker-build-pr
+     name: check docker build PR on s390x
+     arch: s390x
+
    - &unit-test
-     stage: run unit test
-     script:
-       - echo "run unit test"
-     name: run unit test on amd64
+     name: Run unit tests on amd64
+     if: type = pull_request
+     install: 
+       - export GO111MODULE="on" 
+       - go get ${gobuild_args} ./...
+     script: sleep 1m
      arch: amd64
    - <<: *unit-test
-     name: run unit test on ppc64le
-     arch: ppc64le
-     script: bash -c "exit 1"
+     name: Run unit tests on arm64
+     arch: arm64
    - <<: *unit-test
-     name: run unit test on s390x
-     arch: s390x
-     
-   - &test
-     stage: run test
-     script:
-       - echo "run test"
-     name: run test on amd64
-     arch: amd64
-   - <<: *test
-     name: run test on ppc64le
+     name: Run unit tests on ppc64le
      arch: ppc64le
-     script: bash -c "exit 1"
-   - <<: *test
-     name: run test on s390x
+   - <<: *unit-test
+     name: Run unit tests on s390x
      arch: s390x
 
+   - &next-build
+     stage: Build and push both short SHA tag and next tag
+     name: Build image on amd64
+     if: type = push AND branch = travis AND env(TAG) = "next"
+     script: sleep
+     arch: amd64
+   - <<: *next-build
+     name: Build image on arm64
+     arch: arm64
+   - <<: *next-build
+     name: Build image on ppc64le
+     arch: ppc64le
+     script:
+     - sleep 5m
+     - bash -c "exit 1"
+   - <<: *next-build
+     name: Build image on s390x
+     arch: s390x
+   
+  fast_finish: true
   allow_failures:
-  - arch: ppc64le
-    name: run test on ppc64le
-
-
-  
+   - if: type = pull_request
+     arch: ppc64le
