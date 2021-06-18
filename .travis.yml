@@ -61,7 +61,7 @@ jobs:
    - &next-build
      stage: Build and push both short SHA tag and next tag
      name: Build image on amd64
-     if: type = push AND branch = travis AND env(TAG) = "next"
+     if: type = push
      script: sleep
      arch: amd64
    - <<: *next-build
