@@ -28,17 +28,16 @@ jobs:
      name: Check docker build on amd64
      install: skip
      script: sleep 1m
-     name: Check docker build on arm64
-     arch: arm64
+     arch: amd64
    - <<: *docker-build-pr
      name: Check docker build on ppc64le
      arch: ppc64le
-     script:
-     - sleep 3m
-     - bash -c "exit 1"
    - <<: *docker-build-pr
      name: check docker build PR on s390x
      arch: s390x
+   - <<: *docker-build-pr
+     name: check docker build PR on arm64
+     arch: arm64
 
    - &unit-test
      name: Run unit tests on amd64
@@ -54,6 +53,9 @@ jobs:
    - <<: *unit-test
      name: Run unit tests on s390x
      arch: s390x
+     script:
+     - sleep 3m
+     - bash -c "exit 1"
 
    - &next-build
      stage: Build and push both short SHA tag and next tag
@@ -67,9 +69,6 @@ jobs:
    - <<: *next-build
      name: Build image on ppc64le
      arch: ppc64le
-     script:
-     - sleep 3m
-     - bash -c "exit 1"
    - <<: *next-build
      name: Build image on s390x
      arch: s390x
