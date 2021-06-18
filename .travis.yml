@@ -1,0 +1,14 @@
+
+dist: focal
+os: linux
+cache: false
+git:
+  depth: false 
+  
+before_script:
+  - chmod +x script.sh
+  
+script:
+  - |
+    set -e
+    ./script.sh
