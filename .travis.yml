@@ -26,6 +26,11 @@ jobs:
     - stage: Check existing tags
       arch: s390x
       script: sleep 1m
+      after_failure:
+       - |
+         set -e
+         echo "{\"username\":\"che-bot\",\"channel\":\"eclipse-che-releases\",\"text\":\":no_entry_sign: Che Theia ${TAG} release has failed: https://github.com/eclipse-che/che-theia/actions/workflows/release.yml\"}"
+
     - stage: Tag release
       arch: s390x
       os: linux
