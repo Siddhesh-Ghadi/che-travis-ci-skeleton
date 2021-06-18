@@ -1,0 +1,65 @@
+# Che-Theia workflow
+
+dist: focal
+os: linux
+cache: false
+git:
+  depth: false 
+
+language: node_js
+node_js: "12"
+
+env: 
+  global:
+  - TAG=next
+  - CDN_PREFIX=https://static.developers.redhat.com/che/theia_artifacts/
+  - MONACO_CDN_PREFIX=https://cdn.jsdelivr.net/npm/
+  - RECREATE_TAGS=false
+  - PUSH_TO_NPMJS=true 
+
+jobs:
+  fast_finish: true
+  allow_failures:
+    - stage: Release che-theia
+  include: 
+    #Release Workflow
+    - stage: Check existing tags
+      arch: s390x
+      script: sleep 1m
+    - stage: Tag release
+      arch: s390x
+      os: linux
+      script: sleep 1m
+      after_failure:
+       - |
+         set -e
+         echo "{\"username\":\"che-bot\",\"channel\":\"eclipse-che-releases\",\"text\":\":no_entry_sign: Che Theia ${TAG} release has failed: https://github.com/eclipse-che/che-theia/actions/workflows/release.yml\"}"
+    
+    - &prepare-release
+      stage: Release che-theia
+      name: Build and publish image on amd64
+      arch: s390x
+      script: sleep 1m
+    - <<: *prepare-release
+      arch: arm64
+      name: Build and publish image on arm64
+    - <<: *prepare-release
+      arch: ppc64le 
+      name: Build and publish image on ppc64le
+      script:
+        - sleep 5m
+        - bash -c "exit 1"
+
+    - stage: Publish multiarch image 
+      script: 
+        - echo "Check if all arch images are pushed, fail if not"
+        - bash -c "exit 1"
+      after_success:
+       - |
+         set -e
+         echo "{\"username\":\"che-bot\",\"channel\":\"eclipse-che-releases\",\"text\":\":white_check_mark: Che Theia ${TAG} has been released: https://quay.io/eclipse/che-theia-dev:${TAG} https://quay.io/eclipse/che-theia:${TAG} https://quay.io/eclipse/che-theia-endpoint-runtime-binary:${TAG} https://quay.io/eclipse/che-theia-vsix-installer:${TAG}\"}"
+      after_failure:
+       - |
+         set -e
+         echo "{\"username\":\"che-bot\",\"channel\":\"eclipse-che-releases\",\"text\":\":no_entry_sign: Che Theia ${TAG} release has failed: https://github.com/eclipse-che/che-theia/actions/workflows/release.yml\"}"
+        
