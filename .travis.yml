@@ -9,4 +9,4 @@ service: docker
 
 script:
   - |
-    docker run -t -u root registry.access.redhat.com/ubi8/nodejs-14 bash -c "dnf install -y python3 cyrus-sasl cyrus-sasl-devel openssl-devel libffi-devel && yum update -y && dnf upgrade -y && ln -s /usr/bin/python3 /usr/bin/python && npm install --unsafe-perm=true  leveldown@5.6.0 
+    docker run -t -u root registry.access.redhat.com/ubi8/nodejs-14 bash -c 'dnf install -y python3 cyrus-sasl cyrus-sasl-devel openssl-devel libffi-devel && yum update -y && dnf upgrade -y && ln -s /usr/bin/python3 /usr/bin/python && npm install --unsafe-perm=true  leveldown@5.6.0'
