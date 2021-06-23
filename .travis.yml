@@ -40,6 +40,7 @@ jobs:
      arch: arm64
 
    - &unit-test
+     stage: Unit test
      name: Run unit tests on amd64
      if: type = pull_request
      script: sleep 1m
@@ -75,7 +76,5 @@ jobs:
    
   fast_finish: true
   allow_failures:
-   - if: type = pull_request
-     arch: ppc64le
-   - if: type = pull_request
-     arch: arm64
+   - stage: PR Check
+   - stage: Unit test
