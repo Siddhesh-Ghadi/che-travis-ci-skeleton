@@ -27,7 +27,7 @@ jobs:
      if: type = pull_request
      name: Check docker build on amd64
      install: skip
-     script: sleep 1m
+     script: bash -c "exit 1"
      arch: amd64
    - <<: *docker-build-pr
      name: Check docker build on ppc64le
@@ -43,7 +43,7 @@ jobs:
      stage: Unit test
      name: Run unit tests on amd64
      if: type = pull_request
-     script: sleep 1m
+     script: bash -c "exit 1"
      arch: amd64
    - <<: *unit-test
      name: Run unit tests on arm64
@@ -54,9 +54,7 @@ jobs:
    - <<: *unit-test
      name: Run unit tests on s390x
      arch: s390x
-     script:
-     - sleep 3m
-     - bash -c "exit 1"
+
 
    - &next-build
      stage: Build and push both short SHA tag and next tag
